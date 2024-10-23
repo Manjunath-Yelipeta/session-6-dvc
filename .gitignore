@@ -60,7 +60,7 @@ lightning_logs/
 .lightning/
 
 # Package management
-uv.lock
+#uv.lock
 pip-log.txt
 pip-delete-this-directory.txt
 
