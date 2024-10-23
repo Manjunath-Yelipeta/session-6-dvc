@@ -27,7 +27,6 @@ jobs:
         env:
           UV_EXTRA_INDEX_URL: https://download.pytorch.org/whl/cpu
         run: |
-          uv pip install -r requirements.txt
           uv sync
           uv pip install dvc dvc[gdrive] cml
 
