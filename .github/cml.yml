@@ -1,0 +1,75 @@
+name: Train and Report
+on:
+  push:
+    branches: [session6]
+  pull_request:
+    branches: [session6]
+
+permissions:
+  contents: write
+  pull-requests: write
+  repository-projects: write
+  id-token: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        env:
+          UV_EXTRA_INDEX_URL: https://download.pytorch.org/whl/cpu
+        run: |
+          uv pip install -r requirements.txt
+          uv pip install dvc dvc[gdrive] cml
+
+      - name: Configure DVC
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        run: |
+          echo "$GDRIVE_CREDENTIALS_DATA" > credentials.json
+          dvc pull
+
+      - name: Run DVC pipeline
+        run: |
+          dvc repro
+
+      - name: Generate CML Report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Create CML report
+          echo "# Training Report" > report.md
+          
+          # Add all plots
+          echo "## Training Plots" >> report.md
+          for plot in plots/*.png; do
+            cml-publish "$plot" --md >> report.md
+          done
+          
+          # Add all predictions
+          echo "## Model Predictions" >> report.md
+          for pred in pred/*.png; do
+            cml-publish "$pred" --md >> report.md
+          done
+          
+          # Send report
+          cml comment create report.md
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ml-artifacts
+          path: |
+            plots/
+            pred/
+            logs/
+            checkpoint/
+          retention-days: 90

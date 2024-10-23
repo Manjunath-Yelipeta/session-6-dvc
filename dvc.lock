@@ -1,0 +1,96 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: config/data/cat-dog.yaml
+      hash: md5
+      md5: 3186b484b4dcac0840ec83da97c5bab5
+      size: 370
+    - path: config/model/timm_vit_classify.yaml
+      hash: md5
+      md5: 2916d9ec8c1df921e68dfcd1bdc47798
+      size: 228
+    - path: config/train.yaml
+      hash: md5
+      md5: 6c53e59e258a8a36b5e0bd969d101d0f
+      size: 1325
+    - path: data
+      hash: md5
+      md5: 919d85c48c2d7a01dc12d8074a8d35a4.dir
+      size: 866215720
+      nfiles: 25004
+    - path: src/datamodules/dog_datamodule.py
+      hash: md5
+      md5: 76c4060bdc45d468bed2c6ea8ec4f20c
+      size: 5623
+    - path: src/model/timm_classifier.py
+      hash: md5
+      md5: b2fe9926c127ee5a8aac235bd16b687e
+      size: 3959
+    - path: src/train.py
+      hash: md5
+      md5: e189b2a56de4ab664313d2b0c09a727c
+      size: 4493
+  evaluate:
+    cmd: python src/eval.py
+    deps:
+    - path: checkpoint/model_hy.ckpt
+      hash: md5
+      md5: 05a72240523f40c99e8035bc9280e5bf
+      size: 134263560
+    - path: config/data/cat-dog.yaml
+      hash: md5
+      md5: 3186b484b4dcac0840ec83da97c5bab5
+      size: 370
+    - path: config/eval.yaml
+      hash: md5
+      md5: 5735f9030b0c7df8897a77ee40e96bf7
+      size: 1605
+    - path: config/model/timm_vit_classify.yaml
+      hash: md5
+      md5: 2916d9ec8c1df921e68dfcd1bdc47798
+      size: 228
+    - path: src/datamodules/dog_datamodule.py
+      hash: md5
+      md5: 76c4060bdc45d468bed2c6ea8ec4f20c
+      size: 5623
+    - path: src/eval.py
+      hash: md5
+      md5: ff601ba8d96c273163549f3222257a3a
+      size: 1892
+    - path: src/model/timm_classifier.py
+      hash: md5
+      md5: b2fe9926c127ee5a8aac235bd16b687e
+      size: 3959
+  infer:
+    cmd: python src/infer.py
+    deps:
+    - path: checkpoint/model_hy.ckpt
+      hash: md5
+      md5: 05a72240523f40c99e8035bc9280e5bf
+      size: 134263560
+    - path: config/data/cat-dog.yaml
+      hash: md5
+      md5: 3186b484b4dcac0840ec83da97c5bab5
+      size: 370
+    - path: config/infer.yaml
+      hash: md5
+      md5: 9a43e94ac4233b1beb1ff197bbec9cb0
+      size: 1447
+    - path: config/model/timm_vit_classify.yaml
+      hash: md5
+      md5: 2916d9ec8c1df921e68dfcd1bdc47798
+      size: 228
+    - path: src/datamodules/dog_datamodule.py
+      hash: md5
+      md5: 76c4060bdc45d468bed2c6ea8ec4f20c
+      size: 5623
+    - path: src/infer.py
+      hash: md5
+      md5: 2291ca1f794c028b2df7c80d7ab2f5de
+      size: 3463
+    - path: src/model/timm_classifier.py
+      hash: md5
+      md5: b2fe9926c127ee5a8aac235bd16b687e
+      size: 3959

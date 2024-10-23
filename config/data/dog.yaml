@@ -1,0 +1,12 @@
+_target_: src.datamodules.dog_datamodule.DataModule
+data_dir: ${paths.data_dir}
+num_workers: 2
+batch_size: 16
+splits: [0.8, 0.1, 0.1]
+pin_memory: true
+image_size: 224
+normalization_mean: [0.485, 0.456, 0.406]
+normalization_std: [0.229, 0.224, 0.225]
+dataset_file_id: "1-lbK2hPkOeZB-RfwLmeBj3oOSbsWU-ov"
+dataset_subfolder: "dogs_filtered"
+output_file: "dataset.zip" 

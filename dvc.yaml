@@ -1,0 +1,35 @@
+stages:
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - src/datamodules/dog_datamodule.py
+      - src/model/timm_classifier.py
+      - config/train.yaml
+      - config/model/timm_vit_classify.yaml
+      - config/data/cat-dog.yaml
+      - data
+
+
+  evaluate:
+    cmd: python src/eval.py
+    deps:
+      - src/eval.py
+      - src/datamodules/dog_datamodule.py
+      - src/model/timm_classifier.py
+      - config/eval.yaml
+      - config/model/timm_vit_classify.yaml
+      - config/data/cat-dog.yaml
+      - checkpoint/model_hy.ckpt
+
+  infer:
+    cmd: python src/infer.py
+    deps:
+      - src/infer.py
+      - src/datamodules/dog_datamodule.py
+      - src/model/timm_classifier.py
+      - config/infer.yaml
+      - config/model/timm_vit_classify.yaml
+      - config/data/cat-dog.yaml
+      - checkpoint/model_hy.ckpt
+   

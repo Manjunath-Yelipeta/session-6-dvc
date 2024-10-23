@@ -1,0 +1,50 @@
+# @package _global_
+
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+defaults:
+  - _self_
+  - data: cat-dog
+  - model: timm_vit_classify
+  - callbacks: default
+  - logger: default
+  - trainer: default
+  - paths: default
+  - hydra: default
+  - experiment: null
+  - debug: null
+
+# Inference-specific configurations
+inference:
+  image_size: 224
+  normalization_mean: [0.485, 0.456, 0.406]
+  normalization_std: [0.229, 0.224, 0.225]
+
+# task name, determines output directory path
+task_name: "infer"
+
+# tags to help you identify your experiments
+# you can overwrite this in experiment configs
+# overwrite from command line with `python train.py tags="[first_tag, second_tag]"`
+tags: ["inference"]
+
+# set False to skip model training
+train: False
+
+# evaluate on test set, using best model weights achieved during training
+# lightning chooses best weights based on the metric specified in checkpoint callback
+test: True
+
+# simply provide checkpoint path to resume training
+ckpt_path: ${paths.root_dir}/checkpoint/model_hy.ckpt  # This needs to be specified when running the script
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: null
+
+# Hydra will create an output folder for us
+paths:
+  output_dir: ${hydra:runtime.output_dir}
+
+input_folder: ${paths.input_dir}  # This needs to be specified when running the script
+
+output_folder: ${paths.prediction_dir}
